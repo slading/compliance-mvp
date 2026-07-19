@@ -1,0 +1,74 @@
+[
+  {
+    "id": "ordinary_transaction",
+    "payload": {
+      "amount": 100.00,
+      "risk": 0.1,
+      "source_country": "US",
+      "target_country": "FI",
+      "currency": "USD",
+      "purpose": "Invoice for software development services"
+    },
+    "expected": {
+      "decision": "APPROVED",
+      "requires_human_review": false
+    }
+  },
+  {
+    "id": "high_risk",
+    "payload": {
+      "amount": 5000.00,
+      "risk": 0.95,
+      "source_country": "US",
+      "target_country": "FI",
+      "currency": "USD",
+      "purpose": "Invoice for software development services"
+    },
+    "expected": {
+      "decision": "FLAGGED",
+      "requires_human_review": false
+    }
+  },
+  {
+    "id": "prohibited_country",
+    "payload": {
+      "amount": 100.00,
+      "risk": 0.1,
+      "source_country": "US",
+      "target_country": "XX",
+      "currency": "USD",
+      "purpose": "Invoice for software development services"
+    },
+    "expected": {
+      "decision": "FLAGGED",
+      "requires_human_review": false
+    }
+  },
+  {
+    "id": "boundary_risk",
+    "payload": {
+      "amount": 100.00,
+      "risk": 0.5,
+      "source_country": "US",
+      "target_country": "FI",
+      "currency": "USD",
+      "purpose": "Invoice for software development services"
+    },
+    "expected": {
+      "decision": "FLAGGED",
+      "requires_human_review": true
+    }
+  },
+  {
+    "id": "invalid_input",
+    "payload": {
+      "amount": -100.00,
+      "risk": 0.1,
+      "source_country": "USA",
+      "target_country": "FI",
+      "currency": "USD",
+      "purpose": "Invoice for software development services"
+    },
+    "expected_status": 422
+  }
+]
