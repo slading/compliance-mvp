@@ -58,6 +58,29 @@ billable request:
 GROQ_API_KEY=... python3 -m uv run pytest -m integration -v tests/test_groq_integration.py
 ```
 
+Run the standalone in-process load harness with its 30-second default:
+
+```bash
+python3 -m uv run python -m scripts.offline_load_test
+```
+
+Select any positive duration up to five minutes without enabling network I/O:
+
+```bash
+python3 -m uv run python -m scripts.offline_load_test --duration 300
+```
+
+The harness is outside `tests/`, uses only a fake provider plus
+`httpx.ASGITransport`, and prints a compact JSON report. Standard pytest never
+collects it.
+
+Run the separate offline in-process fake-provider contention profile with 20
+workers (500 total requests):
+
+```bash
+python3 -m uv run python -m scripts.offline_load_test --mode concurrency-test
+```
+
 ## Privacy warning
 
 Use synthetic data only. Never send real customer, payment, personal,
